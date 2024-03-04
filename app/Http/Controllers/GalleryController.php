@@ -8,15 +8,25 @@ use App\Http\Requests\UpdateGalleryRequest;
 use App\Http\Resources\GalleryResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
 
 class GalleryController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $galleries = Gallery::with('user')->paginate(10);
+        $filter = $request->input('filter');
+        if($filter){
+            $galleries = Gallery::with('user')->where('title', 'like', "%$filter%")->orWhereHas('user', function($q) use ($filter){
+                $q->where('first_name', 'like', "%$filter%");
+            })->orWhereHas('user', function($q) use ($filter){
+                $q->where('last_name', 'like', "%$filter%");
+            })->paginate(10);
+        }else{
+            $galleries = Gallery::with('user')->paginate(10);
+        }
         return GalleryResource::collection($galleries);
     }
 
