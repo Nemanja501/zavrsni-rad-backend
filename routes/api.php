@@ -24,3 +24,5 @@ Route::post('/register', [AuthController::class, 'register']);
 Route::post('/login', [AuthController::class, 'login']);
 Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::get('/', [GalleryController::class, 'index'])->middleware('cors');
+Route::post('/create', [GalleryController::class, 'store'])->middleware('auth:sanctum');
+Route::get('/my-galleries', [GalleryController::class, 'myGalleries'])->middleware('auth:sanctum');

@@ -19,7 +19,8 @@ class GalleryFactory extends Factory
     {
         return [
             'title' => fake()->sentence(),
-            'pictures' => fake()->imageUrl(),
+            'pictures' => [fake()->imageUrl()],
+            'description' => fake()->paragraph(5),
             'user_id' => User::all()->random()->id
         ];
     }

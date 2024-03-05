@@ -11,7 +11,7 @@ class StoreGalleryRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,11 @@ class StoreGalleryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'title' => 'required|min:2|max:255',
+            'description' => 'max:1000',
+            'pictures' => 'required|array|min:1',
+            'pictures.*' => ['url', 'regex:~^https?://(?:[a-z0-9\-]+\.)+[a-z]{2,6}(?:/[^/#?]+)+\.(?:jpe?g|jpg|png)$~'],
+            'user_id' => 'required|exists:users,id'
         ];
     }
 }

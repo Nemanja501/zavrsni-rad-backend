@@ -9,7 +9,7 @@ class Gallery extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'pictures', 'user_id'];
+    protected $fillable = ['title', 'pictures', 'description', 'user_id'];
 
     protected $casts = [
         'pictures' => 'array'

@@ -9,6 +9,7 @@ use App\Http\Resources\GalleryResource;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GalleryController extends Controller
 {
@@ -31,19 +32,31 @@ class GalleryController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
     public function store(StoreGalleryRequest $request)
     {
-        //
+        $validated = $request->validated();
+        $gallery = Gallery::create([
+            'title' => $validated['title'],
+            'description' => $validated['description'],
+            'pictures' => $validated['pictures'],
+            'user_id' => $validated['user_id']
+        ]);
+
+        return new GalleryResource($gallery);
+    }
+
+    public function myGalleries(Request $request){
+        $userId = Auth::user()->id;
+        
+        $filter = $request->input('filter');
+        if($filter){
+            $galleries = Gallery::with('user')->where('user_id', $userId)->where('title', 'like', "%$filter%")->paginate(10);
+        }else{
+            $galleries = Gallery::with('user')->where('user_id', $userId)->paginate(10);
+        }
+        return GalleryResource::collection($galleries);
     }
 
     /**
