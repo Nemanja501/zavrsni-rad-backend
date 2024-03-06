@@ -79,20 +79,19 @@ class GalleryController extends Controller
         return GalleryResource::collection($galleries);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Gallery $gallery)
-    {
-        //
-    }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateGalleryRequest $request, Gallery $gallery)
+    public function update(UpdateGalleryRequest $request, $id)
     {
-        //
+
+        $gallery = Gallery::find($id);
+
+        $gallery->update($request->all());
+        $gallery->save();
+        return new GalleryResource($gallery);
     }
 
     /**

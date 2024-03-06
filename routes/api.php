@@ -32,3 +32,4 @@ Route::get('/authors/{id}', [GalleryController::class, 'authorGalleries']);
 Route::post('/add-comment', [CommentController::class, 'store'])->middleware('auth:sanctum');
 Route::delete('/delete-comment/{id}', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
 Route::delete('/delete-gallery/{id}', [GalleryController::class, 'destroy'])->middleware('auth:sanctum');
+Route::post('/edit-gallery/{id}', [GalleryController::class, 'update'])->middleware('auth:sanctum');
