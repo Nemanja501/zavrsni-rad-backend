@@ -62,9 +62,10 @@ class GalleryController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Gallery $gallery)
+    public function show($id)
     {
-        //
+        $gallery = Gallery::find($id);
+        return new GalleryResource($gallery);
     }
 
     /**
