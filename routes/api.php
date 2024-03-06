@@ -30,3 +30,4 @@ Route::get('/my-galleries', [GalleryController::class, 'myGalleries'])->middlewa
 Route::get('/galleries/{id}', [GalleryController::class, 'show']);
 Route::get('/authors/{id}', [GalleryController::class, 'authorGalleries']);
 Route::post('/add-comment', [CommentController::class, 'store'])->middleware('auth:sanctum');
+Route::delete('/delete-comment/{id}', [CommentController::class, 'destroy'])->middleware('auth:sanctum');
