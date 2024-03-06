@@ -98,8 +98,13 @@ class GalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Gallery $gallery)
+    public function destroy($id)
     {
-        //
+        $gallery = Gallery::find($id);
+        $gallery->delete();
+
+        return response()->json([
+            'message' => 'Gallery deleted.'
+        ]);
     }
 }
