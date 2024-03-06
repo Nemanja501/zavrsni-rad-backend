@@ -27,6 +27,7 @@ class GalleryController extends Controller
             })->paginate(10);
         }else{
             $galleries = Gallery::with('user')->paginate(10);
+            
         }
         return GalleryResource::collection($galleries);
     }
@@ -64,8 +65,18 @@ class GalleryController extends Controller
      */
     public function show($id)
     {
-        $gallery = Gallery::find($id);
+        $gallery = Gallery::with('user', 'comments.user')->where('id', $id)->first();
         return new GalleryResource($gallery);
+    }
+
+    public function authorGalleries(Request $request, $id){
+        $filter = $request->input('filter');
+        if($filter){
+            $galleries = Gallery::with('user')->where('user_id', $id)->where('title', 'like', "%$filter%")->paginate(10);
+        }else{
+            $galleries = Gallery::with('user')->where('user_id', $id)->paginate(10);
+        }
+        return GalleryResource::collection($galleries);
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\GalleryController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -27,3 +28,5 @@ Route::get('/', [GalleryController::class, 'index'])->middleware('cors');
 Route::post('/create', [GalleryController::class, 'store'])->middleware('auth:sanctum');
 Route::get('/my-galleries', [GalleryController::class, 'myGalleries'])->middleware('auth:sanctum');
 Route::get('/galleries/{id}', [GalleryController::class, 'show']);
+Route::get('/authors/{id}', [GalleryController::class, 'authorGalleries']);
+Route::post('/add-comment', [CommentController::class, 'store'])->middleware('auth:sanctum');
